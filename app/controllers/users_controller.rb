@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :require_user_logged_in, only: [:index, :show, :folowings, :followers, :likes]
-  before_action :pre_user, only: [:show, :followings, :followers, :likes]
+  before_action :set_user, only: [:show, :followings, :followers, :likes]
   
   def index
     @pagy, @users = pagy(User.order(id: :desc), items: 20)
@@ -47,7 +47,7 @@ class UsersController < ApplicationController
     params.require(:user).permit(:name, :email, :password, :password_confirmation)
   end
   
-  def pre_user
+  def set_user
     @user = User.find(params[:id])
   end
     
